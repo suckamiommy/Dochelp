@@ -7,7 +7,7 @@
       <div class="form-group">
         <p>ID <span>*</span></p>
         <span class="icon-case"><i class="fa fa-male"></i></span>
-        <input type="text" name="ID" id="ID" required="required">
+        <input type="text" name="ID_doc" id="ID_doc" required="required">
         <div class="validation"></div>
       </div>
 
@@ -30,35 +30,35 @@
       <div class="form-group">
         <p>Name <span>*</span></p>
         <span class="icon-case"><i class="fa fa-home"></i></span>
-        <input type="text" name="Name" id="Name" required="required">
+        <input type="text" name="Name_doc" id="Name_doc" required="required">
         <div class="validation"></div>
       </div>
 
       <div class="form-group">
         <p>Lastname <span>*</span></p>
         <span class="icon-case"><i class="fa fa-location-arrow"></i></span>
-        <input type="text" name="Lastname" id="Lastname" required="required">
+        <input type="text" name="Lastname_doc" id="Lastname_doc" required="required">
         <div class="validation"></div>
       </div>
 
       <div class="form-group">
         <p>Birth day <span>*</span></p>
         <span class="icon-case"><i class="fa fa-map-marker"></i></span>
-        <input type="date" name="Birthday" id="Birthday" required="required">
+        <input type="date" name="Birthday_doc" id="Birthday_doc" required="required">
         <div class="validation"></div>
       </div>
 
       <div class="form-group">
         <p>Phone number <span>*</span></p>
         <span class="icon-case"><i class="fa fa-phone"></i></span>
-        <input type="text" name="phone" id="phone" required="required">
+        <input type="text" name="phone_doc" id="phone_doc" required="required" pattern="[0-9]{10,10}">
         <div class="validation"></div>
       </div>
 
       <div class="form-group">
         <p>Email <span>*</span></p>
         <span class="icon-case"><i class="fa fa-phone"></i></span>
-        <input type="email" name="Email" id="Email" required="required">
+        <input type="email" name="Email_doc" id="Email_doc" required="required">
         <div class="validation"></div>
       </div>
 
@@ -78,6 +78,7 @@
           }else{
             echo "result 0 row";
           }
+          $conn->close();
           ?>
         </select>
         <div class="validation"></div>

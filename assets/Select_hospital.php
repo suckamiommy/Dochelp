@@ -12,4 +12,5 @@ if($result->num_rows > 0){
 }else{
   echo "result 0 row";
 }
+$conn->close();
 ?>

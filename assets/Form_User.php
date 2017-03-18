@@ -51,7 +51,7 @@
       <div class="form-group">
         <p>Phone number <span>*</span></p>
         <span class="icon-case"><i class="fa fa-phone"></i></span>
-        <input type="text" name="phone" id="phone" required="required">
+        <input type="text" name="phone" id="phone" required="required" pattern="[0-9]{10,10}">
         <div class="validation"></div>
       </div>
 
@@ -72,7 +72,7 @@
       <div class="form-group">
         <p>Detail Congenital disease </p>
         <span class="icon-case"><i class="fa fa-comments-o"></i></span>
-        <textarea name="Decondi" rows="14"></textarea>
+        <textarea name="Decondi" rows="14" id="Decondi"></textarea>
         <div class="validation"></div>
       </div>
     </div>
