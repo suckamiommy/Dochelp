@@ -48,7 +48,7 @@ h1 {
   margin:50px 0px 0px 0px
 }
 
-input {
+input,select {
   border-radius: 0px 5px 5px 0px;
   border: 1px solid #eee;
   margin-bottom: 15px;
@@ -66,7 +66,7 @@ textarea {
   border-radius: 0px 5px 5px 0px;
   border: 1px solid #EEE;
   margin: 0;
-  width: 75%;
+  width: 80%;
   height: 130px;
   float: left;
   padding: 0px 15px;

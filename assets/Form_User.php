@@ -1,4 +1,4 @@
-<form>
+<form id="form_user">
   <h1 style="text-align: center;">สมัครสมาชิกเพื่อเข้าใช้งานเว็บไซต์</h1>
 
   <div class="contentform">

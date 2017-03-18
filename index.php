@@ -10,7 +10,8 @@
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
 	<link rel="stylesheet" href="css/form1css.css">
-	<title>Sliding Panels Template | CodyHouse</title>
+	<link rel="stylesheet" type="text/css" href="js/dist/sweetalert.css">
+	<title>Doctor Helping</title>
 </head>
 <body>
 	<a class="cd-nav-trigger cd-text-replace" href="#primary-nav">Menu<span aria-hidden="true" class="cd-icon"></span></a>
@@ -35,5 +36,7 @@
 	</nav> <!-- .cd-primary-nav -->
 <script src="js/jquery-2.1.1.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->
+<script src="js/indexjs.js"></script>
+<script src="js/dist/sweetalert.min.js"></script>
 </body>
 </html>

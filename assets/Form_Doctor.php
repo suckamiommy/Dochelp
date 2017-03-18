@@ -1,4 +1,4 @@
-<form>
+<form id="form_doctor">
   <h1 style="text-align: center;">สมัครสมาชิกเพื่อเข้าใช้งานเว็บไซต์</h1>
 
   <div class="contentform">
@@ -14,14 +14,14 @@
       <div class="form-group">
         <p>Password <span>*</span></p>
         <span class="icon-case"><i class="fa fa-user"></i></span>
-        <input type="password" name="Password" id="Password" required="required">
+        <input type="password" name="Password_doc" id="Password_doc" required="required">
         <div class="validation"></div>
       </div>
 
       <div class="form-group">
         <p>Confirm Password <span>*</span></p>
         <span class="icon-case"><i class="fa fa-envelope-o"></i></span>
-        <input type="password" name="CPassword" id="CPassword" required="required">
+        <input type="password" name="CPassword_doc" id="CPassword_doc" required="required">
         <div class="validation"></div>
       </div>
 
@@ -63,16 +63,31 @@
       </div>
 
       <div class="form-group">
-        <p>Congenital disease </p>
+        <p>Province <span>*</span></p>
         <span class="icon-case"><i class="fa fa-info"></i></span>
-        <input type="text" name="condi" id="condi">
+        <select class="Province" name="province" required="required">
+          <option value="">กรุณาเลือกจังหวัด</option>
+          <?php
+          require("connectdb.php");
+          $sql = "SELECT * FROM province";
+          $result = $conn->query($sql);
+          if($result->num_rows > 0){
+            while ($row = $result->fetch_assoc()) {
+              echo "<option value='".$row['province_id']."'>".$row['province_name']."</option>";
+            }
+          }else{
+            echo "result 0 row";
+          }
+          ?>
+        </select>
         <div class="validation"></div>
       </div>
 
       <div class="form-group">
-        <p>Detail Congenital disease </p>
-        <span class="icon-case"><i class="fa fa-comments-o"></i></span>
-        <textarea name="Decondi" rows="14"></textarea>
+        <p>Hospital <span>*</span></p>
+        <span class="icon-case"><i class="fa fa-info"></i></span>
+        <select class="Hospital" name="hospital" required="required">
+        </select>
         <div class="validation"></div>
       </div>
     </div>
