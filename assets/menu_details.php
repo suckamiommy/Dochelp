@@ -44,9 +44,13 @@
     </div>
 
     <div class="cd-project-info">
-      <p>
-        ตั้งกระทู้
-      </p>
+      <center>
+        <button type="button" name="button" class="button" id="btn_user" style="vertical-align:middle"><span>ผู้ป่วย </span></button>
+        <button type="button" name="button" class="button" id="btn_doc" style="vertical-align:middle"><span>แพทย์ </span></button>
+      </center>
+      <!-- form -->
+      <?php require("assets/Form_login.php"); ?>
+      <!-- form -->
     </div> <!-- .cd-project-info -->
   </li>
 

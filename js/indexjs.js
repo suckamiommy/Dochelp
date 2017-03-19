@@ -1,6 +1,7 @@
 jQuery(document).ready(function($){
   var register;
   var send;
+  var loginstatus = 0;
   $('#form_user').submit(function(){
     var pass1 = $('input[name="Password"]').val();
     var pass2 = $('input[name="CPassword"]').val();
@@ -92,5 +93,38 @@ jQuery(document).ready(function($){
         $('select[name="hospital"]').html(result);
       }
     });
+  });
+
+  $('#btn_user').click(function(){
+    loginstatus = 1;
+    $('#text').html("User ID <span>*</span>");
+    $('input[name="login"]').val("");
+    $('input[name="login_password"]').val("");
+  });
+
+  $('#btn_doc').click(function(){
+    loginstatus = 2;
+    $('#text').html("Doctor ID <span>*</span>");
+    $('input[name="login"]').val("");
+    $('input[name="login_password"]').val("");
+  });
+
+  $('#form_login').submit(function(){
+    var id = $('input[name="login"]').val();
+    var pass = $('input[name="login_password"]').val();
+    $.ajax({
+      type : 'POST',
+      url : 'assets/Checklogin.php',
+      data : {loginstatus:loginstatus,id:id,pass:pass},
+      success : function(result){
+        var login = result;
+        if(login==1){
+          window.location.assign();
+        }else{
+          swal("Error", "ID หรือ Password ผิดพลาด", "error");
+        }
+      }
+    });
+    return false;
   });
 });
