@@ -79,6 +79,44 @@ $conn->query($sql_u);
 			padding: 10px;
 	    background-color: #ffcccc;
 		}
+		.profile{
+			width: 95%;
+			height: 90%;
+			background-color: #ddd;
+			margin: 0 auto;
+			border-radius: 20px;
+			-webkit-box-shadow: 6px 6px 27px 2px rgba(136,136,136,1);
+			-moz-box-shadow: 6px 6px 27px 2px rgba(136,136,136,1);
+			box-shadow: 6px 6px 27px 2px rgba(136,136,136,1);
+			padding: 7% 5%;
+		}
+		.profile > img{
+			float: left;
+			border-radius: 50%;
+		}
+		.profile > img:hover {
+		  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+		}
+		.profile > .profile_details{
+			position: absolute;
+			right: 8%;
+			top: 15%;
+			background-color: white;
+			width: 55%;
+			height: 70%;
+			border-radius: 20px;
+			color: black;
+		}
+		.profile > .profile_details > h1{
+			margin-top: 5%;
+			color: black;
+		}
+		.profile > .profile_details > h3{
+			margin-top: 2%;
+			text-align: left;
+			margin-left: 15%;
+			font-size: 18px;
+		}
 	</style>
 	<title>Webboard</title>
 </head>
@@ -138,28 +176,63 @@ $conn->query($sql_u);
 				while ($row_a = $result_a->fetch_assoc()) {
 					?>
 					<li id="slide-<?=$i?>">
-						<div class="cd-slider-content">
-							<div class="content-wrapper">
-								<div class="post">
-									<div class="topic">
-										ผู้ตอบคำถาม : <?= $row_a['name'] ?>
-									</div>
-									<div class="detail">
-										<?= $row_a['detail'] ?>
-									</div>
-									<div class="footer">
-										<div style="float:left">
-											อีเมล์ผู้ตอบคำถาม : <?= $row_a['email'] ?>
+						<ol class="sub-slides">
+							<li>
+								<div class="cd-slider-content">
+									<div class="content-wrapper">
+										<div class="post">
+											<div class="topic">
+												ผู้ตอบคำถาม : <?= $row_a['name'] ?>
+											</div>
+											<div class="detail">
+												<?= $row_a['detail'] ?>
+											</div>
+											<div class="footer">
+												<div style="float:left">
+													อีเมล์ผู้ตอบคำถาม : <?= $row_a['email'] ?>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
+							</li>
+
+							<li>
+								<?php
+								$select = "SELECT Name,Lastname,Birthday,Phone_number,Email,province.province_name,hospital.hospital_name,image_doctor.FilesName
+								FROM doctor_details,province,hospital,image_doctor
+								WHERE doctor_details.Province = province.province_id
+								AND doctor_details.Hospital = hospital.hospital_id
+								AND image_doctor.ID_doctor = doctor_details.ID_doctor
+								AND doctor_details.ID_doctor LIKE '".$row_a['ID_doctor']."'";
+								$profile = $conn->query($select);
+								$row_profile = $profile->fetch_assoc();
+								 ?>
+								<div class="cd-slider-content">
+									<div class="content-wrapper">
+										<div class="profile">
+											<img src="../../img/profile/<?=$row_profile['FilesName']?>" width="300px" height="300px" alt="profile">
+											<div class="profile_details">
+												<h1>Doctor profile</h1>
+												<h3>ชื่อ : <b style="margin-left:15%"><?=$row_profile['Name']?></b></h3>
+												<h3>นามสกุล : <b style="margin-left:7.8%"><?=$row_profile['Lastname']?></b></h3>
+												<h3>วันเกิด : <b style="margin-left:10.5%"><?=$row_profile['Birthday']?></b></h3>
+												<h3>เบอร์โทรศัพท์ : <b style="margin-left:1%"><?=$row_profile['Phone_number']?></b></h3>
+												<h3>อีเมลล์ : <b style="margin-left:10.1%"><?=$row_profile['Email']?></b></h3>
+												<h3>จังหวัด : <b style="margin-left:10.1%"><?=$row_profile['province_name']?></b></h3>
+												<h3>โรงพยาบาลที่สังกัด : <b style="margin-left:2.5%"><?=$row_profile['hospital_name']?></b></h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ol> <!-- .sub-slides -->
 					</li>
 					<?php
 					$i++;
 				}
 			}
+			$conn->close();
 			?>
 		</ol> <!-- .cd-slideshow -->
 	</div> <!-- .cd-slideshow-wrapper -->
@@ -173,7 +246,7 @@ $conn->query($sql_u);
 	function rancss(data){
 		var colors = ["#2b3158","#56b456","#52bccf","#df8a2f","#c14fce"];
  		var rand = Math.floor(Math.random()*colors.length);
-		$('#slide-'+data).children().children().css("background-color", colors[rand]);
+		$('#slide-'+data).children().children().children().children().css("background-color", colors[rand]);
 	}
 	for(var i = 2; i < length; i++){
 		rancss(i);

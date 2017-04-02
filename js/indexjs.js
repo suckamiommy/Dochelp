@@ -28,6 +28,7 @@ jQuery(document).ready(function($){
           if(status==1){
             swal("Good job!", "ทำการสมัครเข้าใช้งานเว็บไซต์เสร็จสิ้น", "success");
             $('input').val("");
+            $('#Decondi').val("")
           }else if(status==2){
             swal("Error", "ไม่สามารถสมัครสมาชิกได้ อาจมีข้อมูลผิดพลาด", "error");
           }else{

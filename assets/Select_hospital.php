@@ -2,7 +2,6 @@
 require("../connectdb.php");
 $id_province = $_POST['id'];
 $sql = "SELECT * FROM hospital WHERE province_id = ".$id_province;
-echo $sql;
 $result = $conn->query($sql);
 if($result->num_rows > 0){
   echo "<option value=''>กรุณาเลือกโรงพยาบาล</option>";

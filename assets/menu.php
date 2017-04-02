@@ -3,7 +3,7 @@
     <a href="#0">
       <div class="cd-project-title">
         <h2>Register</h2>
-        <p>สมัครสมาชิกสำหรับผู้ใชทั่วไป</p>
+        <p>สมัครสมาชิกสำหรับผู้ใช้ทั่วไป</p>
       </div>
     </a>
   </li>
@@ -29,8 +29,8 @@
   <li>
     <a href="#0">
       <div class="cd-project-title">
-        <h2>New Posts</h2>
-        <p>โพสต์ใหม่ที่ถูกตั้งขึ้น</p>
+        <h2>Admin</h2>
+        <p>Admin เข้าสู่ระบบ</p>
       </div>
     </a>
   </li>

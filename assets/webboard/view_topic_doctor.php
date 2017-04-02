@@ -79,6 +79,44 @@ $conn->query($sql_u);
 			padding: 10px;
 	    background-color: #ffcccc;
 		}
+		.profile{
+			width: 95%;
+			height: 90%;
+			background-color: #ddd;
+			margin: 0 auto;
+			border-radius: 20px;
+			-webkit-box-shadow: 6px 6px 27px 2px rgba(136,136,136,1);
+			-moz-box-shadow: 6px 6px 27px 2px rgba(136,136,136,1);
+			box-shadow: 6px 6px 27px 2px rgba(136,136,136,1);
+			padding: 7% 5%;
+		}
+		.profile > img{
+			float: left;
+			border-radius: 50%;
+		}
+		.profile > img:hover {
+		  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+		}
+		.profile > .profile_details{
+			position: absolute;
+			right: 8%;
+			top: 15%;
+			background-color: white;
+			width: 55%;
+			height: 70%;
+			border-radius: 20px;
+			color: black;
+		}
+		.profile > .profile_details > h1{
+			margin-top: 5%;
+			color: black;
+		}
+		.profile > .profile_details > h3{
+			margin-top: 2%;
+			text-align: left;
+			margin-left: 15%;
+			font-size: 18px;
+		}
 	</style>
 	<title>Webboard</title>
 </head>
@@ -112,24 +150,54 @@ $conn->query($sql_u);
 
 		<ol class="cd-slideshow">
 			<li class="visible" id="slide-1">
-				<div class="cd-slider-content">
-					<div class="content-wrapper">
-						<div class="post">
-							<div class="topic">
-								<?= $row['topic'] ?>
-							</div>
-							<div class="detail">
-								<?= $row['detail'] ?>
-							</div>
-							<div class="footer">
-								<div style="float:left">
-									ชื่อผู้ตั้งกระทู้ : <?= $row['name'] ?> , อีเมล์ผู้ตั้งกระทู้ : <?= $row['email'] ?>
+				<ol class="sub-slides">
+					<li>
+						<div class="cd-slider-content">
+							<div class="content-wrapper">
+								<div class="post">
+									<div class="topic">
+										<?= $row['topic'] ?>
+									</div>
+									<div class="detail">
+										<?= $row['detail'] ?>
+									</div>
+									<div class="footer">
+										<div style="float:left">
+											ชื่อผู้ตั้งกระทู้ : <?= $row['name'] ?> , อีเมล์ผู้ตั้งกระทู้ : <?= $row['email'] ?>
+										</div>
+										เวลาที่ตั้งกระทู้ : <?= $row['created'] ?>
+									</div>
 								</div>
-								เวลาที่ตั้งกระทู้ : <?= $row['created'] ?>
 							</div>
 						</div>
-					</div>
-				</div>
+					</li>
+
+					<li>
+						<?php
+						$select = "SELECT * FROM user_details INNER JOIN image_user ON
+            user_details.ID_user = image_user.ID_user WHERE user_details.ID_user LIKE '".$row['ID_user']."'";
+						$profile = $conn->query($select);
+						$row_profile = $profile->fetch_assoc();
+						 ?>
+						<div class="cd-slider-content">
+							<div class="content-wrapper">
+								<div class="profile">
+									<img src="../../img/profile/<?=$row_profile['FilesName']?>" width="300px" height="300px" alt="profile">
+									<div class="profile_details">
+										<h1>User profile</h1>
+										<h3>ชื่อ : <b style="margin-left:15%"><?=$row_profile['Name']?></b></h3>
+										<h3>นามสกุล : <b style="margin-left:7.8%"><?=$row_profile['Lastname']?></b></h3>
+										<h3>วันเกิด : <b style="margin-left:10.5%"><?=$row_profile['Birthday']?></b></h3>
+										<h3>เบอร์โทรศัพท์ : <b style="margin-left:1%"><?=$row_profile['Phone_number']?></b></h3>
+										<h3>อีเมลล์ : <b style="margin-left:10.1%"><?=$row_profile['Email']?></b></h3>
+										<h3>โรคประจำตัว : <b style="margin-left:2.5%"><?=($row_profile['Condi']=='')?"-":$row_profile['Condi'];?></b></h3>
+										<h3>รายละเอียดโรคประจำตัว : <b style="margin-left:2.5%"><?=($row_profile['Decondi']=='')?"-":$row_profile['Decondi'];?></b></h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ol> <!-- .sub-slides -->
 			</li>
 
 			<?php
@@ -246,3 +314,6 @@ $conn->query($sql_u);
 </script>
 </body>
 </html>
+<?php
+$conn->close();
+ ?>

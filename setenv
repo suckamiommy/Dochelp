@@ -1,3 +1,0 @@
-export GOPATH=/c/xampp/htdocs/Dochelp
-export GOBIN=/c/xampp/htdocs/Dochelp/bin
-export GOROOT=/c/Go
