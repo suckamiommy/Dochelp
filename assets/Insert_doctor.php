@@ -8,9 +8,12 @@ VALUES ('".$send[0]->ID_doctor."','".$send[0]->Password."','".$send[0]->Username
 $sql_insert_doctor_details = "INSERT INTO doctor_details(ID_doctor, Name, Lastname, Birthday, Phone_number, Email, Province, Hospital)
 VALUES ('".$send[0]->ID_doctor."','".$send[0]->Name."','".$send[0]->Lastname."',
 '".$send[0]->Birthday."','".$send[0]->Phone_number."','".$send[0]->Email."',".$send[0]->Province.",".$send[0]->Hospital.")";
+// insert picture default
+$sql_pic = "INSERT INTO image_doctor VALUES ('".$send[0]->ID_doctor."','noimage.jpg')";
 // run sql
 if($conn->query($sql_insert_doctor) === TRUE){
   if($conn->query($sql_insert_doctor_details) === TRUE){
+    $conn->query($sql_pic);
     echo 1;
   }else{
     echo 2;

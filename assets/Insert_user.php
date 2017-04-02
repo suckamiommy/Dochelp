@@ -9,9 +9,12 @@ $sql_insert_user_details = "INSERT INTO user_details(ID_user, Name, Lastname, Bi
 VALUES ('".$send[0]->ID_user."','".$send[0]->Name."','".$send[0]->Lastname."',
 '".$send[0]->Birthday."','".$send[0]->Phone_number."','".$send[0]->Email."',
 ".(($send[0]->Condi=='')?"NULL":("'".$send[0]->Condi."'")).",".(($send[0]->Decondi=='')?"NULL":("'".$send[0]->Decondi."'")).")";
+// insert picture default
+$sql_pic = "INSERT INTO image_user VALUES ('".$send[0]->ID_user."','noimage.jpg')";
 // run sql
 if($conn->query($sql_insert_user) === TRUE){
   if($conn->query($sql_insert_user_details) === TRUE){
+    $conn->query($sql_pic);
     echo 1;
   }else{
     echo 2;

@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
   var register;
   var send;
-  var loginstatus = 0;
+  var loginstatus = 1;
   $('#form_user').submit(function(){
     var pass1 = $('input[name="Password"]').val();
     var pass2 = $('input[name="CPassword"]').val();
@@ -112,6 +112,7 @@ jQuery(document).ready(function($){
   $('#form_login').submit(function(){
     var id = $('input[name="login"]').val();
     var pass = $('input[name="login_password"]').val();
+
     $.ajax({
       type : 'POST',
       url : 'assets/Checklogin.php',
@@ -119,9 +120,13 @@ jQuery(document).ready(function($){
       success : function(result){
         var login = result;
         if(login==1){
-          window.location.assign();
+          window.location.assign('webboard.php');
+        }else if(login==2){
+          window.location.assign('webboard_doctor.php');
         }else{
           swal("Error", "ID หรือ Password ผิดพลาด", "error");
+          console.log(id,pass);
+          console.log(result);
         }
       }
     });

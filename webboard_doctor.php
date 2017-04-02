@@ -1,9 +1,9 @@
 <?php
 	session_start();
-	if(isset($_SESSION['user'])) {
-		$name = $_SESSION["user"]["name"];
-		$email = $_SESSION["user"]["email"];
-		$id = $_SESSION["user"]["id"];
+	if(isset($_SESSION['doctor'])) {
+		$name = $_SESSION["doctor"]["name"];
+		$email = $_SESSION["doctor"]["email"];
+		$id = $_SESSION["doctor"]["id"];
 	}else{
 		http_response_code(404);
 		header("HTTP/1.0 404 Not Found");
@@ -118,8 +118,7 @@
 					<li>
             <a href="#slide-1">Your Profile</a>
             <ol class="sub-nav">
-							<li><a href="#slide-1">ตั้งกระทู้</a></li>
-							<li><a href="#slide-1">กระทู้ที่เคยตั้งขึ้น</a></li>
+							<li><a href="#slide-1">กระทู้ของผู้ป่วย</a></li>
 						</ol>
           </li>
 					<li><a href="#" id="logout">Log out</a></li>
@@ -133,8 +132,12 @@
 					<li>
 						<?php
 						require('connectdb.php');
-						$select = "SELECT * FROM user_details INNER JOIN image_user ON
-            user_details.ID_user = image_user.ID_user WHERE user_details.ID_user LIKE '".$id."'";
+						$select = "SELECT Name,Lastname,Birthday,Phone_number,Email,province.province_name,hospital.hospital_name,image_doctor.FilesName
+						FROM doctor_details,province,hospital,image_doctor
+						WHERE doctor_details.Province = province.province_id
+						AND doctor_details.Hospital = hospital.hospital_id
+						AND image_doctor.ID_doctor = doctor_details.ID_doctor
+						AND doctor_details.ID_doctor LIKE '".$id."'";
 						$profile = $conn->query($select);
 						$row_profile = $profile->fetch_assoc();
 						 ?>
@@ -149,8 +152,8 @@
 										<h3>วันเกิด : <b style="margin-left:10.5%"><?=$row_profile['Birthday']?></b></h3>
 										<h3>เบอร์โทรศัพท์ : <b style="margin-left:1%"><?=$row_profile['Phone_number']?></b></h3>
 										<h3>อีเมลล์ : <b style="margin-left:10.1%"><?=$row_profile['Email']?></b></h3>
-										<h3>โรคประจำตัว : <b style="margin-left:2.5%"><?=($row_profile['Condi']=='')?"-":$row_profile['Condi'];?></b></h3>
-										<h3>รายละเอียดโรคประจำตัว : <b style="margin-left:2.5%"><?=($row_profile['Decondi']=='')?"-":$row_profile['Decondi'];?></b></h3>
+										<h3>จังหวัด : <b style="margin-left:10.1%"><?=$row_profile['province_name']?></b></h3>
+										<h3>โรงพยาบาลที่สังกัด : <b style="margin-left:2.5%"><?=$row_profile['hospital_name']?></b></h3>
 										<button type="button" name="button" class="myButton">แก้ไข Profile</button>
 									</div>
 								</div>
@@ -160,32 +163,13 @@
 
 					<li>
 						<div class="cd-slider-content">
-							<div class="content-wrapper">
-								<div class="form-style-5">
-									<form id="newpost">
-										<fieldset>
-											<legend><span class="number">></span> ตั้งกระทู้ใหม่</legend>
-											<label for="topic">หัวข้อกระทู้:</label><input type="text" name="topic" placeholder="หัวข้อกระทู้" required="required">
-											<label for="detail">รายละเอียด:</label><textarea name="detail" placeholder="รายละเอียด" style="margin: 0px 0px 30px;height: 159px;width: 943px;" required="required"></textarea>
-											<input type="hidden" name="name" value="<?=$name ?>">
-											<input type="hidden" name="email" value="<?=$email ?>">
-										</fieldset>
-										<input type="submit" value="ตั้งกระทู้ใหม่">
-									</form>
-								</div>
-							</div>
-						</div>
-					</li>
-
-					<li>
-						<div class="cd-slider-content">
 							<div class="content-wrapper" style="padding: 0px 50px;">
 								<section>
-									<h1>กระทู้ที่เคยตั้งขึ้น</h1>
+									<h1>กระทู้ของผู้ป่วย</h1>
 									<div class="tbl-header">
 										<?php
 										require('connect.php');
-										$sql = "SELECT * FROM questions WHERE ID_user LIKE '".$id."' ORDER BY created DESC";
+										$sql = "SELECT * FROM questions ORDER BY id DESC";
 										$result = $conn->query($sql);
 										?>
 										<table cellpadding="0" cellspacing="0" border="0">
@@ -209,7 +193,7 @@
 													?>
 													<tr>
 														<td style="text-align: center;"><?php echo $i; ?></td>
-														<td><a href="assets/webboard/view_topic.php?id=<?php echo $row['id']; ?>"><?php echo $row['topic']; ?></a></td>
+														<td><a href="assets/webboard/view_topic_doctor.php?id=<?php echo $row['id']; ?>"><?php echo $row['topic']; ?></a></td>
 														<td style="text-align: center;"><?php echo $row['view']; ?></td>
 														<td style="text-align: center;"><?php echo $row['reply']; ?></td>
 														<td style="text-align: center;"><?php echo $row['created']; ?></td>
@@ -242,49 +226,14 @@ $(window).on("load resize ", function() {
 }).resize();
 </script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('#logout').click(function(){
+  $(document).ready(function(){
+    $('#logout').click(function(){
 			window.location.assign('assets/webboard/logout.php');
 		});
 		$('.myButton').click(function(){
-			window.location.assign('Edit_profile.php');
+			window.location.assign('Edit_profile_doctor.php');
 		});
-		$('#newpost').submit(function(){
-			var topic = $('input[name="topic"]').val();
-			var detail = $('textarea[name="detail"]').val();
-			var name = $('input[name="name"]').val();
-			var email = $('input[name="email"]').val();
-			var id = "<?= $id ?>";
-			$.ajax({
-				url : 'assets/webboard/add_new_topic.php',
-				type : 'POST',
-				data : {topic:topic,detail:detail,name:name,email:email,id:id},
-				success : function(result){
-					var status = result;
-					if(status==1){
-						swal({
-							title: "Thank You",
-							text: "กระทู้ของคุณถูกตั้งขึ้นแล้ว",
-							type: "success",
-							confirmButtonColor: "#47ed52",
-							confirmButtonText: "OK",
-							closeOnConfirm: false
-						},
-						function(isConfirm){
-							if (isConfirm) {
-								location.reload();
-							} else {
-								location.reload();
-							}
-						});
-					}else{
-						swal("Error", "ไม่สามารถตั้งกระทู้ใหม้ได้", "error");
-					}
-				}
-			});
-			return false;
-		});
-	});
+  });
 </script>
 </body>
 </html>

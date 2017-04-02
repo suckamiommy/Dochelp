@@ -34,7 +34,7 @@
 			<li><a href="#0">Utilities</a></li>
 		</ul>
 	</nav> <!-- .cd-primary-nav -->
-<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->
 <script src="js/indexjs.js"></script>
 <script src="js/dist/sweetalert.min.js"></script>

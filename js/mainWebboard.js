@@ -49,7 +49,7 @@ jQuery(document).ready(function($){
 			isSubSlide = (selectedItem.parents('.sub-nav').length > 0),
 			slideIndex = ( !isSubSlide ) ? selectedItem.parent('li').index() : selectedItem.parents('.sub-nav').parent('li').index(),
 			newSlide = slides.eq(slideIndex);
-		
+
 		slideshow.addClass('remove-transitions');
 		navigation.removeClass('nav-open').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
 			slideshow.removeClass('remove-transitions');
@@ -70,7 +70,7 @@ jQuery(document).ready(function($){
 			updateSubSlide(newSlide ,'nav', visibleSubSlide);
 		}
 	});
-	
+
 	/* update slideshow position on resize */
 	$(window).on('resize', function(){
 		if( !resizing ) {
@@ -81,7 +81,7 @@ jQuery(document).ready(function($){
 
 	function updateSlideDots(listItemNav, string, newSubIndex) {
 		var activeDot = listItemNav.children('.active');
-		
+
 		if( string == 'next' ) var newDots = activeDot.next();
 		else if(  string == 'prev') var newDots = activeDot.prev();
 		else var newDots = listItemNav.children('li').eq(newSubIndex);
@@ -102,7 +102,7 @@ jQuery(document).ready(function($){
 			var subSlidesWrapper = listItem.children('.sub-slides'),
 				visibleSubSlide = subSlidesWrapper.children('.sub-visible');
 			if( visibleSubSlide.length == 0 ) visibleSubSlide = subSlidesWrapper.children('li').eq(0).addClass('sub-visible');
-			
+
 			if( string == 'nav' ) {
 				/* we have choosen a new slide from the navigation */
 				var	newSubSlide = subSlide;
@@ -162,7 +162,7 @@ jQuery(document).ready(function($){
 	}
 
 	function scrollHijacking(event) {
-        if (event.originalEvent.detail < 0 || event.originalEvent.wheelDelta > 0) { 
+        if (event.originalEvent.detail < 0 || event.originalEvent.wheelDelta > 0) {
             delta--;
             ( Math.abs(delta) >= scrollThreshold) && updateSlide('prev');
         } else {
@@ -181,7 +181,7 @@ jQuery(document).ready(function($){
     }
 
 	function bindEvents(MQ, bool) {
-    	if( MQ == 'desktop' && bool) {   		
+    	if( MQ == 'desktop' && bool) {
 			$(window).on('DOMMouseScroll mousewheel', updateOnScroll);
     		$(document).on('keydown', function(event){
 				if( event.which=='40' ) {
@@ -208,7 +208,7 @@ jQuery(document).ready(function($){
 		/* create dots i slide has sub-slides */
 		if( container.find('.slider-dots').length == 0 ) {
 			var navigationWrapper = $('<ol class="slider-dots"></ol>').appendTo(container);
-			for (i = 0; i < slideNumber; i++) { 
+			for (i = 0; i < slideNumber; i++) {
 			    var navItem = (i == 0) ? $('<li class="active"></li>') : $('<li></li>');
 			    navItem.appendTo(navigationWrapper);
 			}
@@ -223,7 +223,7 @@ jQuery(document).ready(function($){
 				slideWidth = (subSlideNumber) * windowWidth;
 			slideWidth = ( slideWidth == 0 ) ? windowWidth : slideWidth;
 			slide.css('width', slideWidth + 'px');
-			if( subSlideNumber > 0 ) { 
+			if( subSlideNumber > 0 ) {
 				var visibleSubSlide = slide.find('.sub-visible');
 				if( visibleSubSlide.length == 0 ) {
 					visibleSubSlide = slide.find('li').eq(0);
