@@ -169,7 +169,19 @@
 									<div class="tbl-header">
 										<?php
 										require('connect.php');
-										$sql = "SELECT * FROM questions ORDER BY id DESC";
+										$block = "SELECT ID_user FROM block WHERE ID_doctor LIKE '".$id."'";
+										$resultblock = $conn->query($block);
+										if($resultblock->num_rows > 0){
+											$sql = "SELECT * FROM questions ";
+											$rowblock = $resultblock->fetch_assoc();
+											$sql .= "WHERE ID_user != '".$rowblock['ID_user']."'";
+											while ($rowblock = $resultblock->fetch_assoc()) {
+												$sql .= " AND ID_user != '".$rowblock['ID_user']."'";
+											}
+											$sql .= " ORDER BY id DESC";
+										}else{
+											$sql = "SELECT * FROM questions ORDER BY id DESC";
+										}
 										$result = $conn->query($sql);
 										?>
 										<table cellpadding="0" cellspacing="0" border="0">

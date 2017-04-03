@@ -117,6 +117,47 @@ $conn->query($sql_u);
 			margin-left: 15%;
 			font-size: 18px;
 		}
+		.myButton {
+			margin-top: 3%;
+			-moz-box-shadow: 0px 9px 21px -6px #276873;
+			-webkit-box-shadow: 0px 9px 21px -6px #276873;
+			box-shadow: 0px 9px 21px -6px #276873;
+			background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #93dffa), color-stop(1, #408c99));
+			background:-moz-linear-gradient(top, #93dffa 5%, #408c99 100%);
+			background:-webkit-linear-gradient(top, #93dffa 5%, #408c99 100%);
+			background:-o-linear-gradient(top, #93dffa 5%, #408c99 100%);
+			background:-ms-linear-gradient(top, #93dffa 5%, #408c99 100%);
+			background:linear-gradient(to bottom, #93dffa 5%, #408c99 100%);
+			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#93dffa', endColorstr='#408c99',GradientType=0);
+			background-color:#93dffa;
+			-moz-border-radius:19px;
+			-webkit-border-radius:19px;
+			border-radius:19px;
+			border:1px solid #29668f;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial;
+			font-size:18px;
+			font-weight:bold;
+			padding:8px 25px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #3d768a;
+		}
+		.myButton:hover {
+			background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #93dffa));
+			background:-moz-linear-gradient(top, #408c99 5%, #93dffa 100%);
+			background:-webkit-linear-gradient(top, #408c99 5%, #93dffa 100%);
+			background:-o-linear-gradient(top, #408c99 5%, #93dffa 100%);
+			background:-ms-linear-gradient(top, #408c99 5%, #93dffa 100%);
+			background:linear-gradient(to bottom, #408c99 5%, #93dffa 100%);
+			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#93dffa',GradientType=0);
+			background-color:#408c99;
+		}
+		.myButton:active {
+			position:relative;
+			top:1px;
+		}
 	</style>
 	<title>Webboard</title>
 </head>
@@ -192,6 +233,7 @@ $conn->query($sql_u);
 										<h3>อีเมลล์ : <b style="margin-left:10.1%"><?=$row_profile['Email']?></b></h3>
 										<h3>โรคประจำตัว : <b style="margin-left:2.5%"><?=($row_profile['Condi']=='')?"-":$row_profile['Condi'];?></b></h3>
 										<h3>รายละเอียดโรคประจำตัว : <b style="margin-left:2.5%"><?=($row_profile['Decondi']=='')?"-":$row_profile['Decondi'];?></b></h3>
+										<input type="button" class="myButton" value="บล็อคผู้ใช้งาน"></button>
 									</div>
 								</div>
 							</div>
@@ -309,6 +351,54 @@ $conn->query($sql_u);
 				}
 			});
 			return false;
+		});
+		$('.myButton').click(function(){
+			swal({
+				title: "คุณแน่ใจแล้วหรือ",
+				text: "การบล็อคผู้ใช้งาน จะทำให้ไม่เห็นกระทู้ของผู้ใช้งานคนนั้นอีกต่อไป",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "ตกลง",
+				cancelButtonText: "ยกเลิก",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			},
+			function(isConfirm){
+				if (isConfirm) {
+					var user = "<?=$row['ID_user']?>";
+					var doctor = "<?=$id?>";
+					$.ajax({
+						url : '../block_user.php',
+						type : 'POST',
+						data : {doctor:doctor,user:user},
+						success : function(result){
+							var block = result;
+							if(block==1){
+								swal({
+									title: "สำเร็จ",
+									text: "บล็อคผู้ใช้งานสำเร็จคุณจะไม่เห็น Post ของเขาอีกต่อไป",
+									type: "success",
+									confirmButtonColor: "#47ed52",
+									confirmButtonText: "OK",
+									closeOnConfirm: false
+								},
+								function(isConfirm){
+									if (isConfirm) {
+										window.location.assign('../../webboard_doctor.php');
+									} else {
+										window.location.assign('../../webboard_doctor.php');
+									}
+								});
+							}else{
+								swal("Error", "ไม่สามารถบล็อคผู้ใช้งานได้", "error");
+							}
+						}
+					});
+				} else {
+					swal("ยกเลิก", "ตัดสินใจให้ดีก่อนจะบล็อคผู้ใช้งาน", "error");
+				}
+			});
 		});
 	});
 </script>
